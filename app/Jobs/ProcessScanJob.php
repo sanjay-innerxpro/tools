@@ -46,12 +46,27 @@ class ProcessScanJob implements ShouldQueue
 
         try {
             $options = $scan->options ?? [];
+            $isKnownPlatform = $this->isKnownVideoPlatform($scan->url);
             $fetchResult = $crawler->fetch($scan->url);
 
             if (!$fetchResult['success']) {
-                $scan->markFailed($fetchResult['error_code'], $fetchResult['error_message']);
-                $this->updateProgress($scan->id, 'failed', 100, $fetchResult['error_message']);
-                return;
+                // For known video platforms, don't bail — yt-dlp can handle them without HTML
+                if (!$isKnownPlatform) {
+                    $scan->markFailed($fetchResult['error_code'], $fetchResult['error_message']);
+                    $this->updateProgress($scan->id, 'failed', 100, $fetchResult['error_message']);
+                    return;
+                }
+
+                // Fake a minimal fetch result so the rest of the pipeline doesn't break
+                $fetchResult = [
+                    'success' => true,
+                    'type' => 'html',
+                    'url' => $scan->url,
+                    'resolved_url' => $scan->url,
+                    'html' => '',
+                    'needs_js_render' => false,
+                    'page_title' => null,
+                ];
             }
 
             $scan->update([
@@ -65,19 +80,40 @@ class ProcessScanJob implements ShouldQueue
 
             $needsJsRender = $fetchResult['needs_js_render'] ?? false;
 
-            if ($fetchResult['type'] === 'direct_media') {
-                $assets = $detector->detectDirectMedia(
-                    $fetchResult['url'],
-                    $fetchResult['content_type'],
-                    $fetchResult['content_length'] ?? null,
-                    $fetchResult['content_disposition'] ?? null,
-                );
-            } else {
-                $assets = $detector->detect(
-                    $fetchResult['html'],
-                    $fetchResult['resolved_url'],
-                    $options,
-                );
+            // Phase 0: For known video platforms, try yt-dlp FIRST — it's the most reliable extractor
+            // and avoids false positives from HTML/headless detection picking up third-party URLs.
+            if ($isKnownPlatform) {
+                $this->updateProgress($scan->id, 'detecting', 45, 'Detected known video platform — using yt-dlp extractor...');
+
+                $ytResult = $ytDlp->extract($scan->url);
+
+                if ($ytResult['success'] && !empty($ytResult['assets'])) {
+                    $assets = $ytResult['assets'];
+
+                    if (!empty($ytResult['title']) && empty($scan->page_title)) {
+                        $scan->update(['page_title' => $ytResult['title']]);
+                    }
+                }
+            }
+
+            $hasRealMedia = !empty(array_filter($assets, fn($a) => in_array($a['type'] ?? '', ['video', 'audio', 'document'])));
+
+            // Phase 1: Static HTML detection (skip if yt-dlp already succeeded)
+            if (!$hasRealMedia) {
+                if ($fetchResult['type'] === 'direct_media') {
+                    $assets = $detector->detectDirectMedia(
+                        $fetchResult['url'],
+                        $fetchResult['content_type'],
+                        $fetchResult['content_length'] ?? null,
+                        $fetchResult['content_disposition'] ?? null,
+                    );
+                } else {
+                    $assets = $detector->detect(
+                        $fetchResult['html'],
+                        $fetchResult['resolved_url'],
+                        $options,
+                    );
+                }
             }
 
             // Phase 2: If page needs JS rendering and Phase 1 found no *real* media, use headless browser
@@ -136,7 +172,7 @@ class ProcessScanJob implements ShouldQueue
 
             $hasRealMedia = !empty(array_filter($assets, fn($a) => in_array($a['type'] ?? '', ['video', 'audio', 'document'])));
             if (!$hasRealMedia) {
-                // Phase 3: Try yt-dlp as final fallback (supports 1800+ sites)
+                // Phase 3: Try yt-dlp as final fallback for non-known sites (supports 1800+ sites)
                 $this->updateProgress($scan->id, 'detecting', 65, 'Trying yt-dlp extractor (supports YouTube, Vimeo, Wistia, 1800+ sites)...');
 
                 $ytResult = $ytDlp->extract($scan->url);
@@ -267,5 +303,38 @@ class ProcessScanJob implements ShouldQueue
         if (str_contains($ct, 'mpegurl') || str_contains($ct, 'mpegURL')) return 'video';
 
         return null;
+    }
+
+    private function isKnownVideoPlatform(string $url): bool
+    {
+        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+
+        $platforms = [
+            'youtube.com', 'youtu.be', 'www.youtube.com', 'm.youtube.com',
+            'vimeo.com', 'player.vimeo.com',
+            'dailymotion.com', 'dai.ly',
+            'twitch.tv', 'clips.twitch.tv',
+            'facebook.com', 'fb.watch',
+            'instagram.com',
+            'tiktok.com',
+            'twitter.com', 'x.com',
+            'soundcloud.com',
+            'bandcamp.com',
+            'reddit.com',
+            'streamable.com',
+            'rumble.com',
+            'bitchute.com',
+            'odysee.com',
+            'bilibili.com',
+            'nicovideo.jp',
+        ];
+
+        foreach ($platforms as $platform) {
+            if ($host === $platform || str_ends_with($host, '.' . $platform)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

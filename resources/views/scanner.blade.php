@@ -1,39 +1,25 @@
-<!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': darkMode }">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name') }} — URL Media Detector</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
-    <style>
-        [x-cloak] { display: none !important; }
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+@extends('layouts.app')
 
-<div x-data="mediaScanner()" x-cloak class="max-w-4xl mx-auto px-4 py-8">
+@section('title', config('app.name') . ' — ' . __('URL Media Scanner'))
 
-    {{-- Header --}}
-    <div class="flex items-center justify-between mb-8">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                <span class="text-blue-600 dark:text-blue-400">&#9881;</span> Media Detector
-            </h1>
-            <p class="text-gray-500 dark:text-gray-400 mt-1">Paste any public URL to detect downloadable media assets</p>
+@section('content')
+<div x-data="mediaScanner()" x-cloak class="max-w-4xl mx-auto px-4 py-10">
+
+    {{-- Page Header --}}
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl shadow-lg shadow-blue-500/20 mb-5">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
         </div>
-        <button @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)"
-                class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-            <span x-show="!darkMode" class="text-xl">&#127769;</span>
-            <span x-show="darkMode" class="text-xl">&#9728;&#65039;</span>
-        </button>
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+            {{ __('Media Scanner') }}
+        </h1>
+        <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg">{{ __('Paste any public URL to detect downloadable media assets') }}</p>
     </div>
 
     {{-- URL Input --}}
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 mb-6">
         <form @submit.prevent="startScan()">
             <div class="flex flex-col sm:flex-row gap-3">
                 <div class="flex-1 relative">
@@ -48,13 +34,13 @@
                 <button type="submit"
                         :disabled="scanning || !url"
                         class="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors flex items-center gap-2">
-                    <span x-show="!scanning">&#128270; Scan</span>
+                    <span x-show="!scanning">&#128270; {{ __('Scan') }}</span>
                     <span x-show="scanning" class="flex items-center gap-2">
                         <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                         </svg>
-                        Scanning...
+                        {{ __('Scanning...') }}
                     </span>
                 </button>
             </div>
@@ -62,19 +48,19 @@
             {{-- Options toggle --}}
             <div class="mt-3">
                 <button type="button" @click="showOptions = !showOptions" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
-                    &#9881; Advanced options
+                    &#9881; {{ __('Advanced options') }}
                 </button>
                 <div x-show="showOptions" x-transition class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                         <input type="checkbox" x-model="options.includeImages" class="rounded border-gray-300 dark:border-gray-600">
-                        Include images
+                        {{ __('Include images') }}
                     </label>
                     <div>
-                        <label class="text-sm text-gray-600 dark:text-gray-300">Min file size (KB)</label>
+                        <label class="text-sm text-gray-600 dark:text-gray-300">{{ __('Min file size (KB)') }}</label>
                         <input type="number" x-model.number="options.minFileSize" min="0" class="mt-1 w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                     </div>
                     <div>
-                        <label class="text-sm text-gray-600 dark:text-gray-300">Max results</label>
+                        <label class="text-sm text-gray-600 dark:text-gray-300">{{ __('Max results') }}</label>
                         <input type="number" x-model.number="options.maxResults" min="1" max="500" class="mt-1 w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                     </div>
                 </div>
@@ -84,7 +70,7 @@
 
     {{-- Progress Bar --}}
     <template x-if="scanning">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6 fade-in">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 mb-6 fade-in">
             <div class="flex items-center justify-between mb-2">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300" x-text="progressMessage"></span>
                 <span class="text-sm text-gray-500" x-text="progress + '%'"></span>
@@ -125,31 +111,31 @@
             </template>
 
             {{-- Stats Bar --}}
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 mb-4">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-4 mb-4">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
                             <span x-text="results.stats.totalAssets > 0 ? '&#9989;' : '&#128269;'"></span>
-                            <span x-text="results.stats.totalAssets"></span> asset<span x-show="results.stats.totalAssets !== 1">s</span> found
+                            <span x-text="results.stats.totalAssets"></span> <span x-text="results.stats.totalAssets !== 1 ? '{{ __('assets found') }}' : '{{ __('asset found') }}'"></span>
                         </h2>
                         <p class="text-sm text-gray-500 dark:text-gray-400" x-text="results.pageTitle || results.url"></p>
                     </div>
                     <div x-show="results.stats.totalSize > 0" class="text-sm text-gray-500 dark:text-gray-400">
-                        Total: <span x-text="formatBytes(results.stats.totalSize)"></span>
+                        {{ __('Total:') }} <span x-text="formatBytes(results.stats.totalSize)"></span>
                     </div>
                 </div>
             </div>
 
             {{-- No assets found message --}}
             <template x-if="results.stats.totalAssets === 0">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-8 text-center">
                     <div class="text-5xl mb-4">&#128566;</div>
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No downloadable media detected</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{ __('No downloadable media detected') }}</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                        The page may load media dynamically via JavaScript, require authentication, or not contain any publicly accessible media files.
+                        {{ __('The page may load media dynamically via JavaScript, require authentication, or not contain any publicly accessible media files.') }}
                     </p>
                     <div class="mt-4 space-y-2 text-sm text-gray-400 dark:text-gray-500">
-                        <p>Try a page that contains direct &lt;video&gt;, &lt;audio&gt;, or download links.</p>
+                        <p>{{ __('Try a page that contains direct <video>, <audio>, or download links.') }}</p>
                     </div>
                 </div>
             </template>
@@ -159,7 +145,7 @@
                 <button @click="filter = 'all'"
                         :class="filter === 'all' ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
-                    All (<span x-text="results.stats.totalAssets"></span>)
+                    {{ __('All') }} (<span x-text="results.stats.totalAssets"></span>)
                 </button>
                 <template x-for="(count, type) in results.stats.byType" :key="type">
                     <button @click="filter = type"
@@ -173,21 +159,21 @@
             {{-- Sort --}}
             <div x-show="results.stats.totalAssets > 0" class="flex justify-end mb-3">
                 <select x-model="sortBy" class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                    <option value="name">Sort by name</option>
-                    <option value="size">Sort by size</option>
-                    <option value="type">Sort by type</option>
+                    <option value="name">{{ __('Sort by name') }}</option>
+                    <option value="size">{{ __('Sort by size') }}</option>
+                    <option value="type">{{ __('Sort by type') }}</option>
                 </select>
             </div>
 
             {{-- Asset Cards --}}
             <div class="space-y-3">
                 <template x-for="asset in filteredAssets()" :key="asset.id">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow fade-in">
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-700 transition-all fade-in">
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex items-start gap-3 flex-1 min-w-0">
                                 <span class="text-2xl flex-shrink-0 mt-0.5" x-text="getTypeIcon(asset.type)"></span>
                                 <div class="min-w-0 flex-1">
-                                    <h3 class="font-medium text-gray-900 dark:text-white truncate" x-text="asset.filename || 'Unknown file'"></h3>
+                                    <h3 class="font-medium text-gray-900 dark:text-white truncate" x-text="asset.filename || '{{ __('Unknown file') }}'"></h3>
                                     <div class="flex flex-wrap gap-2 mt-1">
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium capitalize"
                                               :class="getTypeBadgeClass(asset.type)"
@@ -196,7 +182,7 @@
                                         <span x-show="asset.sizeFormatted" class="text-xs text-gray-500 dark:text-gray-400" x-text="asset.sizeFormatted"></span>
                                         <span x-show="!asset.sizeFormatted && (asset.extension === 'm3u8' || asset.extension === 'mpd')"
                                               class="text-xs text-purple-600 dark:text-purple-400 font-medium"
-                                              x-text="asset.extension === 'm3u8' ? 'HLS Stream' : 'DASH Stream'"></span>
+                                              x-text="asset.extension === 'm3u8' ? '{{ __('HLS Stream') }}' : '{{ __('DASH Stream') }}'"></span>
                                         <span x-show="asset.quality" class="text-xs text-blue-600 dark:text-blue-400 font-medium" x-text="asset.quality"></span>
                                     </div>
 
@@ -210,7 +196,7 @@
 
                                     {{-- DRM Warning --}}
                                     <div x-show="asset.drm" class="mt-2 text-xs text-amber-600 dark:text-amber-400">
-                                        &#128274; This content is DRM-protected and cannot be downloaded.
+                                        &#128274; {{ __('This content is DRM-protected and cannot be downloaded.') }}
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +216,7 @@
                                                 class="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-white text-sm font-medium rounded-lg transition-all whitespace-nowrap">
 
                                             {{-- Idle state --}}
-                                            <span x-show="!hlsDownloading[asset.id] && !hlsReady[asset.id]" class="flex items-center gap-1.5">&#11015;&#65039; Download as MP4</span>
+                                            <span x-show="!hlsDownloading[asset.id] && !hlsReady[asset.id]" class="flex items-center gap-1.5">&#11015;&#65039; {{ __('Download as MP4') }}</span>
 
                                             {{-- Processing state --}}
                                             <span x-show="hlsDownloading[asset.id] && !hlsReady[asset.id]" class="flex items-center gap-1.5">
@@ -238,11 +224,11 @@
                                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4z"></path>
                                                 </svg>
-                                                <span x-text="hlsProgress[asset.id] || 'Starting...'"></span>
+                                                <span x-text="hlsProgress[asset.id] || '{{ __('Starting...') }}'"></span>
                                             </span>
 
                                             {{-- Ready state --}}
-                                            <span x-show="hlsReady[asset.id]" class="flex items-center gap-1.5">&#9989; Save MP4
+                                            <span x-show="hlsReady[asset.id]" class="flex items-center gap-1.5">&#9989; {{ __('Save MP4') }}
                                                 <span x-show="hlsFileSize[asset.id]"
                                                       class="text-[11px] opacity-80"
                                                       x-text="hlsFileSize[asset.id] ? '(' + formatBytes(hlsFileSize[asset.id]) + ')' : ''"></span>
@@ -268,12 +254,12 @@
                                 <template x-if="asset.downloadable && !asset.drm && !asset.hlsDownloadUrl">
                                     <a :href="asset.downloadUrl"
                                        class="inline-flex items-center gap-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
-                                        &#11015;&#65039; Download
+                                        &#11015;&#65039; {{ __('Download') }}
                                     </a>
                                 </template>
                                 <template x-if="asset.drm">
                                     <span class="inline-flex items-center gap-1 px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
-                                        Unavailable
+                                        {{ __('Unavailable') }}
                                     </span>
                                 </template>
                             </div>
@@ -284,25 +270,28 @@
 
             {{-- No results for filter --}}
             <div x-show="filteredAssets().length === 0" class="text-center py-8 text-gray-500 dark:text-gray-400">
-                No assets match the selected filter.
+                {{ __('No assets match the selected filter.') }}
             </div>
         </div>
     </template>
 
     {{-- Disclaimer --}}
     <div class="mt-12 text-center text-xs text-gray-400 dark:text-gray-500">
-        <p>Only download content you have the right to access. Respect copyright laws and terms of service.</p>
-        <p class="mt-1">DRM-protected content is flagged and cannot be downloaded. This tool does not bypass any access restrictions.</p>
+        <p>{{ __('Only download content you have the right to access. Respect copyright laws and terms of service.') }}</p>
+        <p class="mt-1">{{ __('DRM-protected content is flagged and cannot be downloaded. This tool does not bypass any access restrictions.') }}</p>
     </div>
 </div>
 
+@endsection
+
+@push('scripts')
 <script>
 function mediaScanner() {
     return {
         url: '',
         scanning: false,
         progress: 0,
-        progressMessage: 'Initializing...',
+        progressMessage: '{{ __('Initializing...') }}',
         error: null,
         results: null,
         scanId: null,
@@ -327,7 +316,7 @@ function mediaScanner() {
             this.error = null;
             this.results = null;
             this.progress = 5;
-            this.progressMessage = 'Submitting scan request...';
+            this.progressMessage = '{{ __('Submitting scan request...') }}';
 
             try {
                 const res = await fetch('/api/scan', {
@@ -350,7 +339,7 @@ function mediaScanner() {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    this.error = data.error?.message || 'An unknown error occurred.';
+                    this.error = data.error?.message || '{{ __('An unknown error occurred.') }}';
                     this.scanning = false;
                     return;
                 }
@@ -367,7 +356,7 @@ function mediaScanner() {
                 this.pollProgress();
 
             } catch (e) {
-                this.error = 'Network error. Please check your connection and try again.';
+                this.error = '{{ __('Network error. Please check your connection and try again.') }}';
                 this.scanning = false;
             }
         },
@@ -380,7 +369,7 @@ function mediaScanner() {
 
                     if (data.progress) {
                         this.progress = data.progress.progress || 0;
-                        this.progressMessage = data.progress.message || 'Processing...';
+                        this.progressMessage = data.progress.message || '{{ __('Processing...') }}';
                     }
 
                     if (data.status === 'completed') {
@@ -389,7 +378,7 @@ function mediaScanner() {
                         this.scanning = false;
                     } else if (data.status === 'failed') {
                         clearInterval(this.pollInterval);
-                        this.error = data.progress?.message || 'Scan failed.';
+                        this.error = data.progress?.message || '{{ __('Scan failed.') }}';
                         this.scanning = false;
                     }
                 } catch (e) {
@@ -407,12 +396,12 @@ function mediaScanner() {
                     this.results = data;
                     this.filter = 'all';
                 } else if (data.status === 'failed') {
-                    this.error = data.error?.message || 'Scan failed.';
+                    this.error = data.error?.message || '{{ __('Scan failed.') }}';
                 } else {
-                    this.error = 'No results available yet.';
+                    this.error = '{{ __('No results available yet.') }}';
                 }
             } catch (e) {
-                this.error = 'Failed to load results.';
+                this.error = '{{ __('Failed to load results.') }}';
             }
         },
 
@@ -485,7 +474,7 @@ function mediaScanner() {
             if (this.hlsDownloading[asset.id]) return;
             this.hlsDownloading = { ...this.hlsDownloading, [asset.id]: true };
             this.hlsError = { ...this.hlsError, [asset.id]: null };
-            this.hlsProgress = { ...this.hlsProgress, [asset.id]: 'Starting download...' };
+            this.hlsProgress = { ...this.hlsProgress, [asset.id]: '{{ __('Starting download...') }}' };
             this.hlsProgressPct = { ...this.hlsProgressPct, [asset.id]: 2 };
 
             try {
@@ -496,7 +485,7 @@ function mediaScanner() {
                 });
 
                 if (!startRes.ok) {
-                    let msg = 'Failed to start download.';
+                    let msg = '{{ __('Failed to start download.') }}';
                     try { const d = await startRes.json(); msg = d.error?.message || d.message || msg; } catch (_) {}
                     this.hlsError = { ...this.hlsError, [asset.id]: msg };
                     return;
@@ -518,21 +507,21 @@ function mediaScanner() {
                                 const speed = data.done > 0 && elapsed > 2
                                     ? ` · ${Math.round(data.done / elapsed)}/s`
                                     : '';
-                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: `Downloading ${data.done}/${data.total} segments${speed}` };
+                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: `{{ __('Downloading') }} ${data.done}/${data.total} {{ __('segments') }}${speed}` };
                                 this.hlsProgressPct = { ...this.hlsProgressPct, [asset.id]: Math.max(pct, 2) };
                             } else if (data.status === 'converting') {
-                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: 'Converting to MP4...' };
+                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: '{{ __('Converting to MP4...') }}' };
                                 this.hlsProgressPct = { ...this.hlsProgressPct, [asset.id]: 92 };
                             } else if (data.status === 'done') {
                                 const sizeStr = data.fileSize ? ' (' + this.formatBytes(data.fileSize) + ')' : '';
-                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: 'Ready to save!' + sizeStr };
+                                this.hlsProgress = { ...this.hlsProgress, [asset.id]: '{{ __('Ready to save!') }}' + sizeStr };
                                 this.hlsProgressPct = { ...this.hlsProgressPct, [asset.id]: 100 };
                                 if (data.fileSize) this.hlsFileSize = { ...this.hlsFileSize, [asset.id]: data.fileSize };
                                 clearInterval(poll);
                                 resolve({ success: true, taskId });
                             } else if (data.status === 'error') {
                                 clearInterval(poll);
-                                resolve({ success: false, message: data.message || 'Download failed.' });
+                                resolve({ success: false, message: data.message || '{{ __('Download failed.') }}' });
                             } else if (data.message) {
                                 this.hlsProgress = { ...this.hlsProgress, [asset.id]: data.message };
                             }
@@ -544,7 +533,7 @@ function mediaScanner() {
                     // Safety timeout: 15 minutes
                     setTimeout(() => {
                         clearInterval(poll);
-                        resolve({ success: false, message: 'Download timed out after 15 min.' });
+                        resolve({ success: false, message: '{{ __('Download timed out after 15 min.') }}' });
                     }, 900000);
                 });
 
@@ -560,7 +549,7 @@ function mediaScanner() {
                 this.$nextTick(() => this.downloadHls(asset));
 
             } catch (e) {
-                this.hlsError = { ...this.hlsError, [asset.id]: 'Download failed. Try again.' };
+                this.hlsError = { ...this.hlsError, [asset.id]: '{{ __('Download failed. Try again.') }}' };
             } finally {
                 this.hlsDownloading = { ...this.hlsDownloading, [asset.id]: false };
             }
@@ -568,6 +557,4 @@ function mediaScanner() {
     };
 }
 </script>
-
-</body>
-</html>
+@endpush
