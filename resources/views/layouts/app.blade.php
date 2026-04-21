@@ -59,27 +59,69 @@
                         </div>
                     </div>
 
-                    {{-- Image Tools Dropdown --}}
+                    {{-- Image & Media Dropdown --}}
                     <div class="relative" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/image-converter') || request()->is('tools/compress-image') || request()->is('tools/image-resizer') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                            {{ __('Image Tools') }}
+                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/image-converter') || request()->is('tools/compress-image') || request()->is('tools/image-resizer') || request()->is('tools/video-converter') || request()->is('tools/audio-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+                            {{ __('Image & Media') }}
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                         </button>
-                        <div x-show="open" x-transition class="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl py-1 z-50">
+                        <div x-show="open" x-transition class="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl py-1 z-50">
                             <a href="/tools/image-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Image Converter') }}</a>
                             <a href="/tools/compress-image" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Compress Image') }}</a>
                             <a href="/tools/image-resizer" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Image Resizer') }}</a>
+                            <div class="my-1 border-t border-gray-100 dark:border-gray-800"></div>
+                            <a href="/tools/video-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Video Converter') }}</a>
+                            <a href="/tools/audio-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Audio Converter') }}</a>
                         </div>
                     </div>
 
-                    <a href="/tools/qr-code-generator"
-                       class="px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('tools/qr-code-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                        {{ __('QR Code') }}
-                    </a>
-                    <a href="/tools/word-counter"
-                       class="px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->is('tools/word-counter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                        {{ __('Word Counter') }}
-                    </a>
+                    {{-- Utilities Dropdown --}}
+                    <div class="relative" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false">
+                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/password-generator') || request()->is('tools/json-formatter') || request()->is('tools/base64-encoder') || request()->is('tools/unit-converter') || request()->is('tools/color-converter') || request()->is('tools/qr-code-generator') || request()->is('tools/word-counter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+                            {{ __('Utilities') }}
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="open" x-transition class="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl py-1 z-50">
+                            <a href="/tools/password-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Password Generator') }}</a>
+                            <a href="/tools/json-formatter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('JSON Formatter') }}</a>
+                            <a href="/tools/base64-encoder" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Base64 Encoder / Decoder') }}</a>
+                            <a href="/tools/unit-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Unit Converter') }}</a>
+                            <a href="/tools/color-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Color Converter') }}</a>
+                            <div class="my-1 border-t border-gray-100 dark:border-gray-800"></div>
+                            <a href="/tools/qr-code-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('QR Code Generator') }}</a>
+                            <a href="/tools/word-counter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Word Counter') }}</a>
+                        </div>
+                    </div>
+
+                    {{-- Dev Tools Dropdown --}}
+                    <div class="relative" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false">
+                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/lorem-ipsum') || request()->is('tools/url-encoder') || request()->is('tools/hash-generator') || request()->is('tools/text-case-converter') || request()->is('tools/markdown-preview') || request()->is('tools/timestamp-converter') || request()->is('tools/uuid-generator') || request()->is('tools/diff-checker') || request()->is('tools/regex-tester') || request()->is('tools/number-base-converter') || request()->is('tools/age-calculator') || request()->is('tools/percentage-calculator') || request()->is('tools/bmi-calculator') || request()->is('tools/stopwatch') || request()->is('tools/random-number-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+                            {{ __('More Tools') }}
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div x-show="open" x-transition class="absolute top-full right-0 mt-1 w-60 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl py-1 z-50 max-h-96 overflow-y-auto">
+                            <p class="px-4 pt-2 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Developer & Text') }}</p>
+                            <a href="/tools/lorem-ipsum" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Lorem Ipsum Generator') }}</a>
+                            <a href="/tools/url-encoder" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('URL Encoder / Decoder') }}</a>
+                            <a href="/tools/hash-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Hash Generator') }}</a>
+                            <a href="/tools/text-case-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Text Case Converter') }}</a>
+                            <a href="/tools/markdown-preview" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Markdown Preview') }}</a>
+                            <div class="my-1 border-t border-gray-100 dark:border-gray-800"></div>
+                            <p class="px-4 pt-2 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Web & Code') }}</p>
+                            <a href="/tools/timestamp-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Timestamp Converter') }}</a>
+                            <a href="/tools/uuid-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('UUID Generator') }}</a>
+                            <a href="/tools/diff-checker" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Diff Checker') }}</a>
+                            <a href="/tools/regex-tester" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Regex Tester') }}</a>
+                            <a href="/tools/number-base-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Number Base Converter') }}</a>
+                            <div class="my-1 border-t border-gray-100 dark:border-gray-800"></div>
+                            <p class="px-4 pt-2 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Daily Tools') }}</p>
+                            <a href="/tools/age-calculator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Age Calculator') }}</a>
+                            <a href="/tools/percentage-calculator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Percentage Calculator') }}</a>
+                            <a href="/tools/bmi-calculator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('BMI Calculator') }}</a>
+                            <a href="/tools/stopwatch" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Stopwatch') }}</a>
+                            <a href="/tools/random-number-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Random Number Generator') }}</a>
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Right side --}}
@@ -160,8 +202,32 @@
                 <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Utilities') }}</p>
                 <a href="/tools/qr-code-generator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/qr-code-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('QR Code Generator') }}</a>
                 <a href="/tools/word-counter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/word-counter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Word Counter') }}</a>
-
-                {{-- Mobile Language Switcher --}}
+                <a href="/tools/password-generator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/password-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Password Generator') }}</a>
+                <a href="/tools/json-formatter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/json-formatter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('JSON Formatter') }}</a>
+                <a href="/tools/base64-encoder" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/base64-encoder') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Base64 Encoder / Decoder') }}</a>
+                <a href="/tools/unit-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/unit-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Unit Converter') }}</a>
+                <a href="/tools/color-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/color-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Color Converter') }}</a>
+                <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Media') }}</p>
+                <a href="/tools/video-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/video-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Video Converter') }}</a>
+                <a href="/tools/audio-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/audio-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Audio Converter') }}</a>
+                <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Developer & Text') }}</p>
+                <a href="/tools/lorem-ipsum" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/lorem-ipsum') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Lorem Ipsum Generator') }}</a>
+                <a href="/tools/url-encoder" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/url-encoder') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('URL Encoder / Decoder') }}</a>
+                <a href="/tools/hash-generator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/hash-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Hash Generator') }}</a>
+                <a href="/tools/text-case-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/text-case-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Text Case Converter') }}</a>
+                <a href="/tools/markdown-preview" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/markdown-preview') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Markdown Preview') }}</a>
+                <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Web & Code') }}</p>
+                <a href="/tools/timestamp-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/timestamp-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Timestamp Converter') }}</a>
+                <a href="/tools/uuid-generator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/uuid-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('UUID Generator') }}</a>
+                <a href="/tools/diff-checker" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/diff-checker') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Diff Checker') }}</a>
+                <a href="/tools/regex-tester" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/regex-tester') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Regex Tester') }}</a>
+                <a href="/tools/number-base-converter" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/number-base-converter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Number Base Converter') }}</a>
+                <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Daily Tools') }}</p>
+                <a href="/tools/age-calculator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/age-calculator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Age Calculator') }}</a>
+                <a href="/tools/percentage-calculator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/percentage-calculator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Percentage Calculator') }}</a>
+                <a href="/tools/bmi-calculator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/bmi-calculator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('BMI Calculator') }}</a>
+                <a href="/tools/stopwatch" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/stopwatch') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Stopwatch') }}</a>
+                <a href="/tools/random-number-generator" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('tools/random-number-generator') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800' }}">{{ __('Random Number Generator') }}</a>
                 <p class="px-3 pt-3 pb-1 text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Language') }}</p>
                 <div class="px-3 flex flex-wrap gap-2">
                     @foreach(['en' => 'EN', 'hi' => 'हि', 'es' => 'ES', 'fr' => 'FR', 'zh' => '中', 'ar' => 'عر', 'pt' => 'PT', 'de' => 'DE', 'ja' => '日', 'ru' => 'RU'] as $code => $label)

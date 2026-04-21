@@ -55,6 +55,11 @@ Route::get('/tools/uuid-generator', fn() => view('tools.uuid-generator'));
 Route::get('/tools/diff-checker', fn() => view('tools.diff-checker'));
 Route::get('/tools/regex-tester', fn() => view('tools.regex-tester'));
 Route::get('/tools/number-base-converter', fn() => view('tools.number-base-converter'));
+Route::get('/tools/age-calculator', fn() => view('tools.age-calculator'));
+Route::get('/tools/percentage-calculator', fn() => view('tools.percentage-calculator'));
+Route::get('/tools/bmi-calculator', fn() => view('tools.bmi-calculator'));
+Route::get('/tools/stopwatch', fn() => view('tools.stopwatch'));
+Route::get('/tools/random-number-generator', fn() => view('tools.random-number-generator'));
 
 // Download route for tool outputs
 Route::get('/tools/download/{filename}', function (string $filename) {
