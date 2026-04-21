@@ -40,6 +40,21 @@ Route::get('/tools/audio-converter', [AudioConverterController::class, 'index'])
 // Client-side only tools (no backend needed)
 Route::get('/tools/qr-code-generator', fn() => view('tools.qr-code-generator'));
 Route::get('/tools/word-counter', fn() => view('tools.word-counter'));
+Route::get('/tools/password-generator', fn() => view('tools.password-generator'));
+Route::get('/tools/json-formatter', fn() => view('tools.json-formatter'));
+Route::get('/tools/base64-encoder', fn() => view('tools.base64-encoder'));
+Route::get('/tools/unit-converter', fn() => view('tools.unit-converter'));
+Route::get('/tools/color-converter', fn() => view('tools.color-converter'));
+Route::get('/tools/lorem-ipsum', fn() => view('tools.lorem-ipsum'));
+Route::get('/tools/url-encoder', fn() => view('tools.url-encoder'));
+Route::get('/tools/hash-generator', fn() => view('tools.hash-generator'));
+Route::get('/tools/text-case-converter', fn() => view('tools.text-case-converter'));
+Route::get('/tools/markdown-preview', fn() => view('tools.markdown-preview'));
+Route::get('/tools/timestamp-converter', fn() => view('tools.timestamp-converter'));
+Route::get('/tools/uuid-generator', fn() => view('tools.uuid-generator'));
+Route::get('/tools/diff-checker', fn() => view('tools.diff-checker'));
+Route::get('/tools/regex-tester', fn() => view('tools.regex-tester'));
+Route::get('/tools/number-base-converter', fn() => view('tools.number-base-converter'));
 
 // Download route for tool outputs
 Route::get('/tools/download/{filename}', function (string $filename) {

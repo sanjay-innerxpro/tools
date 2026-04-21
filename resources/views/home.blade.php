@@ -11,7 +11,7 @@
             <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-400/10 dark:bg-indigo-400/5 rounded-full blur-3xl"></div>
         </div>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-32">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
             <div class="text-center max-w-3xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-6">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -29,7 +29,7 @@
                     {{ __('Download media from any URL, convert files, and more. All tools are free, fast, and work right in your browser.') }}
                 </p>
 
-                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <a href="/tools/media-scanner"
                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all text-base">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -50,15 +50,15 @@
     </section>
 
     {{-- Tools Grid --}}
-    <section id="tools" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <section id="tools" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {{-- Section Header --}}
-        <div class="text-center mb-12">
+        <div class="text-center mb-6">
             <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ __('All Tools') }}</h2>
             <p class="mt-3 text-gray-500 dark:text-gray-400 text-lg">{{ __('Choose a tool to get started') }}</p>
         </div>
 
         {{-- Category: Media --}}
-        <div class="mb-16">
+        <div class="mb-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -98,7 +98,7 @@
         </div>
 
         {{-- Category: Converters --}}
-        <div class="mb-16">
+        <div class="mb-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -314,12 +314,339 @@
                 </a>
             </div>
         </div>
+
+        {{-- Category: Utilities --}}
+        <div class="mb-0">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('Utilities') }}</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {{-- Password Generator --}}
+                <a href="/tools/password-generator"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-green-300 dark:hover:border-green-700 hover:shadow-lg hover:shadow-green-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/20 group-hover:shadow-green-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{{ __('Password Generator') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Create strong, random passwords instantly') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-green-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                {{-- JSON Formatter --}}
+                <a href="/tools/json-formatter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{{ __('JSON Formatter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Format & validate JSON instantly') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-amber-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                {{-- Base64 Encoder --}}
+                <a href="/tools/base64-encoder"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-lg hover:shadow-violet-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">{{ __('Base64 Encoder / Decoder') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Encode text to Base64 or decode Base64 to plain text') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-violet-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                {{-- Unit Converter --}}
+                <a href="/tools/unit-converter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-300 dark:hover:border-sky-700 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{{ __('Unit Converter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Convert between units of length, weight, temperature, and more') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-sky-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                {{-- Color Converter --}}
+                <a href="/tools/color-converter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-pink-300 dark:hover:border-pink-700 hover:shadow-lg hover:shadow-pink-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-pink-500/20 group-hover:shadow-pink-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">{{ __('Color Converter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Convert colors between HEX, RGB, and HSL formats') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-pink-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- Category: Developer & Text Tools --}}
+    <section class="bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('Developer & Text Tools') }}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{{ __('Powerful tools for coders and content creators') }}</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {{-- Lorem Ipsum --}}
+                <a href="/tools/lorem-ipsum"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-teal-300 dark:hover:border-teal-700 hover:shadow-lg hover:shadow-teal-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-teal-500/20 group-hover:shadow-teal-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{{ __('Lorem Ipsum Generator') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Generate realistic placeholder text for designs and prototypes.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-teal-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- URL Encoder --}}
+                <a href="/tools/url-encoder"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-orange-300 dark:hover:border-orange-700 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">{{ __('URL Encoder / Decoder') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Encode and decode URL-safe percent-encoded strings.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-orange-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Hash Generator --}}
+                <a href="/tools/hash-generator"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg hover:shadow-gray-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-slate-600 to-gray-800 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-slate-900/20 group-hover:shadow-slate-900/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">{{ __('Hash Generator') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Compute SHA-1, SHA-256, SHA-384 and SHA-512 checksums.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-gray-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Text Case Converter --}}
+                <a href="/tools/text-case-converter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-lime-300 dark:hover:border-lime-700 hover:shadow-lg hover:shadow-lime-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-lime-400 to-green-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-lime-500/20 group-hover:shadow-lime-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors">{{ __('Text Case Converter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Convert text between UPPERCASE, lowercase, camelCase, and more.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-lime-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Markdown Preview --}}
+                <a href="/tools/markdown-preview"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-300 dark:hover:border-sky-700 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{{ __('Markdown Preview') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Write Markdown and preview the rendered HTML output.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-sky-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- Category: Web & Code Tools --}}
+    <section class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('Web & Code Tools') }}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{{ __('Essential tools for web developers and programmers') }}</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {{-- Timestamp Converter --}}
+                <a href="/tools/timestamp-converter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-300 dark:hover:border-sky-700 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{{ __('Timestamp Converter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Convert Unix timestamps to readable dates and vice versa.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-sky-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- UUID Generator --}}
+                <a href="/tools/uuid-generator"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-lg hover:shadow-violet-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">{{ __('UUID Generator') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Generate cryptographically random UUID v4 identifiers.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-violet-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Diff Checker --}}
+                <a href="/tools/diff-checker"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{{ __('Diff Checker') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Compare two text blocks and highlight line-by-line changes.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-amber-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Regex Tester --}}
+                <a href="/tools/regex-tester"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-rose-300 dark:hover:border-rose-700 hover:shadow-lg hover:shadow-rose-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-rose-500/20 group-hover:shadow-rose-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">{{ __('Regex Tester') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Test regular expressions and see live highlighted matches.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-rose-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+                {{-- Number Base Converter --}}
+                <a href="/tools/number-base-converter"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{{ __('Number Base Converter') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Convert numbers between Binary, Octal, Decimal and Hex.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-indigo-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+            </div>
+        </div>
     </section>
 
     {{-- Features Section --}}
     <section class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-            <div class="text-center mb-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+            <div class="text-center mb-8">
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">{{ __('Why use :app?', ['app' => config('app.name')]) }}</h2>
                 <p class="mt-3 text-gray-500 dark:text-gray-400 text-lg">{{ __('Built for simplicity, speed, and privacy') }}</p>
             </div>
