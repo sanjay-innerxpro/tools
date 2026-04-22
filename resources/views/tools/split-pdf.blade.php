@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Split PDF'))
+@section('meta_description', __('Split PDF files into separate pages or custom page ranges quickly and securely online.'))
 
 @section('content')
 <div x-data="splitPdf()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

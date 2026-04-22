@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('QR Code Generator'))
+@section('meta_description', __('Create QR codes online for URLs, text, and contact details with quick download options.'))
 
 @section('content')
 <div x-data="qrGen()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('URL Encoder / Decoder'))
+@section('meta_description', __('Encode and decode URL strings safely for query parameters, redirects, and web development tasks.'))
 
 @section('content')
 <div x-data="urlTool()" x-cloak class="max-w-5xl mx-auto px-4 py-10">

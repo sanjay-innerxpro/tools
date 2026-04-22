@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Color Converter'))
+@section('meta_description', __('Convert color values between HEX, RGB, HSL, and more formats for design and frontend work.'))
 
 @section('content')
 <div x-data="colorConverter()" x-cloak class="max-w-2xl mx-auto px-4 py-10">

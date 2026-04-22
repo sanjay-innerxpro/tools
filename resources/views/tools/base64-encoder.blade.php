@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Base64 Encoder / Decoder'))
+@section('meta_description', __('Encode text to Base64 or decode Base64 strings instantly for APIs, tokens, and debugging.'))
 
 @section('content')
 <div x-data="base64Tool()" x-cloak class="max-w-5xl mx-auto px-4 py-10">

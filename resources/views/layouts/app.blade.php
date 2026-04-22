@@ -8,7 +8,9 @@
         $seoTitle = trim($__env->yieldContent('title', $defaultTitle));
         $seoDescription = trim($__env->yieldContent('meta_description', $defaultDescription));
         $seoRobots = trim($__env->yieldContent('meta_robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'));
-        $seoImage = trim($__env->yieldContent('meta_image', asset('favicon.ico')));
+        $defaultSeoImage = \App\Support\SeoMeta::defaultImageForPath(request()->path());
+
+        $seoImage = trim($__env->yieldContent('meta_image', $defaultSeoImage));
         $baseCurrentUrl = url()->current();
         $currentQuery = request()->query();
         $canonicalQuery = $currentQuery;

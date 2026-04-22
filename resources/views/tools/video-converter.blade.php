@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Video Converter'))
+@section('meta_description', __('Convert video files between popular formats like MP4, WebM, AVI, and MOV quickly in your browser.'))
 
 @section('content')
 <div x-data="videoConverter()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

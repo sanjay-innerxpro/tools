@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Hash Generator'))
+@section('meta_description', __('Create MD5, SHA-1, SHA-256, and other hashes instantly for verification and development tasks.'))
 
 @section('content')
 <div x-data="hashGen()" x-cloak class="max-w-3xl mx-auto px-4 py-10">

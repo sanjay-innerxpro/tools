@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Unit Converter'))
+@section('meta_description', __('Convert length, weight, temperature, and other units accurately with this fast free unit converter.'))
 
 @section('content')
 <div x-data="unitConverter()" x-cloak class="max-w-3xl mx-auto px-4 py-10">

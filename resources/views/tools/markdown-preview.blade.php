@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Markdown Preview'))
+@section('meta_description', __('Write and preview Markdown in real time with formatted output for docs, notes, and README files.'))
 
 @section('content')
 <div x-data="mdPreview()" x-cloak class="max-w-7xl mx-auto px-4 py-10">

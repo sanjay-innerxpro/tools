@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Text Case Converter'))
+@section('meta_description', __('Change text to uppercase, lowercase, title case, or sentence case instantly with one click.'))
 
 @section('content')
 <div x-data="caseConverter()" x-cloak class="max-w-3xl mx-auto px-4 py-10">

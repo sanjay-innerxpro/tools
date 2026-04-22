@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('JSON Formatter'))
+@section('meta_description', __('Format, validate, and beautify JSON data online to improve readability and catch syntax issues.'))
 
 @section('content')
 <div x-data="jsonFormatter()" x-cloak class="max-w-6xl mx-auto px-4 py-10">

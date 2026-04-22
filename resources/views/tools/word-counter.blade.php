@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Word & Character Counter'))
+@section('meta_description', __('Count words, characters, sentences, and reading time instantly with this free online word and character counter.'))
 
 @section('content')
 <div x-data="wordCounter()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

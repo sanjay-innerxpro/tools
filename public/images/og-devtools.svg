@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">ToolBox - Dev and Text Tools</title>
+  <desc id="desc">Developer and text-focused tools for daily workflows.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="90" y="140" fill="#a5b4fc" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">TOOLBOX</text>
+  <text x="90" y="230" fill="#ffffff" font-size="74" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Dev & Text Tools</text>
+  <text x="90" y="292" fill="#c7d2fe" font-size="34" font-family="Segoe UI, Arial, sans-serif">Regex, diff, hash, markdown, and code helpers</text>
+
+  <rect x="90" y="340" width="1020" height="190" rx="24" fill="#020617" opacity="0.62"/>
+  <rect x="126" y="376" width="470" height="156" rx="14" fill="#0b1220"/>
+  <text x="150" y="418" fill="#818cf8" font-size="24" font-family="Consolas, monospace">/^tool(box)?$/gi</text>
+  <text x="150" y="456" fill="#4ade80" font-size="24" font-family="Consolas, monospace">match: toolbox</text>
+  <text x="150" y="494" fill="#fbbf24" font-size="24" font-family="Consolas, monospace">hash: 8f14e45f...</text>
+
+  <rect x="640" y="376" width="430" height="156" rx="14" fill="#111827"/>
+  <text x="668" y="420" fill="#e5e7eb" font-size="24" font-family="Consolas, monospace">- old_value</text>
+  <text x="668" y="458" fill="#34d399" font-size="24" font-family="Consolas, monospace">+ new_value</text>
+  <text x="668" y="498" fill="#93c5fd" font-size="24" font-family="Consolas, monospace"># Title</text>
+</svg>

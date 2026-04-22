@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Number Base Converter'))
+@section('meta_description', __('Convert numbers between binary, octal, decimal, and hexadecimal formats instantly.'))
 
 @section('content')
 <div x-data="baseConverter()" x-cloak class="max-w-2xl mx-auto px-4 py-10">

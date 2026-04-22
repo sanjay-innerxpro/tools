@@ -2,6 +2,7 @@
 
 @section('title', config('app.name') . ' — ' . __('Free Online Media & File Tools'))
 @section('meta_description', __('Free online media and file tools: scan media URLs, convert PDFs and images, optimize files, and use fast utility tools with no signup required.'))
+@section('meta_image', asset('images/og-default.svg'))
 
 @section('content')
     {{-- Hero Section --}}

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Timestamp Converter'))
+@section('meta_description', __('Convert Unix timestamps to readable dates and transform dates back to timestamps in seconds.'))
 
 @section('content')
 <div x-data="timestampTool()" x-cloak class="max-w-3xl mx-auto px-4 py-10">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('Merge PDF'))
+@section('meta_description', __('Merge multiple PDF files into one organized document quickly with a free online PDF combiner.'))
 
 @section('content')
 <div x-data="mergePdf()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

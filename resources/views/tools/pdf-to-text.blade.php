@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('PDF to Text'))
+@section('meta_description', __('Extract clean text from PDF files in seconds using this free and simple PDF to text converter.'))
 
 @section('content')
 <div x-data="pdfToText()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

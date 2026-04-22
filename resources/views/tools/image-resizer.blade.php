@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Image Resizer'))
+@section('meta_description', __('Resize images to exact width and height or percentage while keeping quality and proportions.'))
 
 @section('content')
 <div x-data="imageResizer()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('UUID Generator'))
+@section('meta_description', __('Generate secure UUIDs instantly for apps, APIs, databases, and development workflows.'))
 
 @section('content')
 <div x-data="uuidGen()" x-cloak x-init="generate()" class="max-w-3xl mx-auto px-4 py-10">

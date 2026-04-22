@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Regex Tester'))
+@section('meta_description', __('Test regular expressions with live matches, flags, and instant feedback for faster debugging.'))
 
 @section('content')
 <div x-data="regexTester()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

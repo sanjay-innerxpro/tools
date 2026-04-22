@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Password Generator'))
+@section('meta_description', __('Generate strong random passwords with custom length and character options for better account security.'))
 
 @section('content')
 <div x-data="passwordGen()" x-cloak class="max-w-2xl mx-auto px-4 py-10">

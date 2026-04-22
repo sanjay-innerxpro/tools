@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Lorem Ipsum Generator'))
+@section('meta_description', __('Generate Lorem Ipsum placeholder text by paragraph, sentence, or word for design and content mockups.'))
 
 @section('content')
 <div x-data="loremIpsum()" x-cloak class="max-w-3xl mx-auto px-4 py-10">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('Image Converter'))
+@section('meta_description', __('Convert images between JPG, PNG, WebP, GIF, and more formats with a fast free image converter.'))
 
 @section('content')
 <div x-data="imageConverter()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

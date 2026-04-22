@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Audio Converter'))
+@section('meta_description', __('Convert audio between MP3, WAV, AAC, FLAC, and other formats quickly with this free tool.'))
 
 @section('content')
 <div x-data="audioConverter()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

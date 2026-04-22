@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', config('app.name') . ' — ' . __('Diff Checker'))
+@section('meta_description', __('Compare two text blocks and highlight differences instantly to review edits and spot changes.'))
 
 @section('content')
 <div x-data="diffChecker()" x-cloak class="max-w-7xl mx-auto px-4 py-10">

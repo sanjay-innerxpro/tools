@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('Compress Image'))
+@section('meta_description', __('Reduce image file size without major quality loss using this quick online image compressor.'))
 
 @section('content')
 <div x-data="compressImage()" x-cloak class="max-w-4xl mx-auto px-4 py-10">
