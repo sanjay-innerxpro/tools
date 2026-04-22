@@ -27,6 +27,48 @@ Route::get('/tools/media-scanner', function () {
     return view('scanner');
 });
 
+Route::get('/sitemap.xml', function () {
+    $today = now()->toDateString();
+
+    $urls = collect(Route::getRoutes())
+        ->filter(function ($route) {
+            $uri = $route->uri();
+
+            return in_array('GET', $route->methods(), true)
+                && !str_contains($uri, '{')
+                && !str_starts_with($uri, 'api/')
+                && !str_starts_with($uri, '_')
+                && $uri !== 'sitemap.xml';
+        })
+        ->map(function ($route) use ($today) {
+            $uri = $route->uri();
+            $path = $uri === '/' ? '/' : '/' . ltrim($uri, '/');
+
+            $priority = '0.80';
+            $changefreq = 'weekly';
+
+            if ($path === '/') {
+                $priority = '1.00';
+                $changefreq = 'daily';
+            } elseif ($path === '/tools/media-scanner') {
+                $priority = '0.90';
+            }
+
+            return [
+                'loc' => url($path),
+                'lastmod' => $today,
+                'changefreq' => $changefreq,
+                'priority' => $priority,
+            ];
+        })
+        ->unique('loc')
+        ->values();
+
+    return response()
+        ->view('sitemap', ['urls' => $urls], 200)
+        ->header('Content-Type', 'application/xml; charset=UTF-8');
+})->name('sitemap');
+
 // Tool pages
 Route::get('/tools/pdf-to-text', [PdfToTextController::class, 'index']);
 Route::get('/tools/image-converter', [ImageConverterController::class, 'index']);

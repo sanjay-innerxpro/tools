@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('URL Media Scanner'))
+@section('meta_description', __('Scan any public URL to detect downloadable videos, audio, and media assets. Fast browser-based media discovery with no signup required.'))
 
 @section('content')
 <div x-data="mediaScanner()" x-cloak class="max-w-4xl mx-auto px-4 py-10">

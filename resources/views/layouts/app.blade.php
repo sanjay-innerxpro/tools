@@ -1,11 +1,84 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" @if(app()->getLocale() === 'ar') dir="rtl" @endif x-data="{ darkMode: localStorage.getItem('darkMode') === 'true', mobileMenu: false }" :class="{ 'dark': darkMode }">
 <head>
+    @php
+        $appName = config('app.name', 'ToolBox');
+        $defaultTitle = $appName . ' — ' . __('Free Online Media & File Tools');
+        $defaultDescription = __('Use :app free online tools to scan media URLs, convert files, and handle daily tasks instantly. No signup required.', ['app' => $appName]);
+        $seoTitle = trim($__env->yieldContent('title', $defaultTitle));
+        $seoDescription = trim($__env->yieldContent('meta_description', $defaultDescription));
+        $seoRobots = trim($__env->yieldContent('meta_robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'));
+        $seoImage = trim($__env->yieldContent('meta_image', asset('favicon.ico')));
+        $baseCurrentUrl = url()->current();
+        $currentQuery = request()->query();
+        $canonicalQuery = $currentQuery;
+        $canonicalUrl = $baseCurrentUrl;
+        if (!empty($canonicalQuery)) {
+            ksort($canonicalQuery);
+            $canonicalUrl .= '?' . http_build_query($canonicalQuery);
+        }
+
+        $supportedLocales = ['en','hi','es','fr','zh','ar','pt','de','ja','ru'];
+        $currentLocale = app()->getLocale();
+
+        $siteLd = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => $appName,
+            'url' => url('/'),
+            'inLanguage' => $currentLocale,
+        ];
+
+        $webPageLd = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => $seoTitle,
+            'description' => $seoDescription,
+            'url' => $canonicalUrl,
+            'isPartOf' => [
+                '@type' => 'WebSite',
+                'name' => $appName,
+                'url' => url('/'),
+            ],
+            'inLanguage' => $currentLocale,
+        ];
+    @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', config('app.name') . ' — ' . __('Free Online Media & File Tools'))</title>
-    <meta name="description" content="@yield('meta_description', __('Free online tools to download media, convert files, and more. No signup required.'))">
+    <title>{{ $seoTitle }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="robots" content="{{ $seoRobots }}">
+
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $appName }}">
+    <meta property="og:locale" content="{{ str_replace('-', '_', $currentLocale) }}">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+
+    @foreach($supportedLocales as $locale)
+        @php
+            $altQuery = array_merge($currentQuery, ['lang' => $locale]);
+            ksort($altQuery);
+            $altUrl = $baseCurrentUrl . '?' . http_build_query($altQuery);
+        @endphp
+        <link rel="alternate" hreflang="{{ $locale }}" href="{{ $altUrl }}">
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}">
+
+    <script type="application/ld+json">{!! json_encode($siteLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+    <script type="application/ld+json">{!! json_encode($webPageLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+
+    @stack('head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.bunny.net">

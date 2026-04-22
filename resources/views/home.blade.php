@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' — ' . __('Free Online Media & File Tools'))
+@section('meta_description', __('Free online media and file tools: scan media URLs, convert PDFs and images, optimize files, and use fast utility tools with no signup required.'))
 
 @section('content')
     {{-- Hero Section --}}
