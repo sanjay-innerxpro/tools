@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 class YtDlpService
 {
-    private const PYTHON_PATH = 'C:\\Python312\\python.exe';
-    private const PACKAGES_PATH = 'C:\\xampp\\htdocs\\project1\\storage\\python-packages';
+    private const PYTHON_EXECUTABLE = 'python';
 
     public function extract(string $url): array
     {
@@ -43,7 +42,7 @@ class YtDlpService
         file_put_contents($scriptPath, $script);
 
         try {
-            $python = self::PYTHON_PATH;
+            $python = env('PYTHON_EXECUTABLE', self::PYTHON_EXECUTABLE);
             $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
 
             $returnCode = 0;
@@ -85,13 +84,11 @@ class YtDlpService
 
     private function buildScript(string $url, string $outputFile): string
     {
-        $packagesPath = self::PACKAGES_PATH;
         $escapedUrl = addslashes($url);
         $escapedOutput = addslashes($outputFile);
 
         return <<<PYTHON
 import sys, json, os
-sys.path.insert(0, r'{$packagesPath}')
 
 import yt_dlp
 
