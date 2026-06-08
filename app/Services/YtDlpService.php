@@ -90,9 +90,15 @@ class YtDlpService
     {
         $escapedUrl = addslashes($url);
         $escapedOutput = addslashes($outputFile);
+        $packagesPath = addslashes((string) env('PYTHON_PACKAGES_PATH', ''));
 
         return <<<PYTHON
 import sys, json, os
+
+# Make pip --target installed packages importable (yt-dlp etc.)
+_pkgs = r'{$packagesPath}'
+if _pkgs:
+    sys.path.insert(0, _pkgs)
 
 import yt_dlp
 

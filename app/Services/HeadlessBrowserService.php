@@ -57,10 +57,26 @@ class HeadlessBrowserService
 
     private function getRenderedHtml(string $url): string
     {
-        return Browsershot::url($url)
-            ->setChromePath(self::CHROME_PATH)
-            ->setNodeBinary(self::NODE_PATH)
-            ->setNpmBinary(self::NPM_PATH)
+        $browsershot = Browsershot::url($url);
+
+        // Only pin binary paths when explicitly configured. On Linux/shared hosting
+        // we let Browsershot find `node` on PATH and use Puppeteer's bundled Chromium,
+        // instead of the Windows dev-machine defaults which don't exist on the server.
+        $chromePath = env('CHROME_PATH');
+        $nodePath = env('NODE_BINARY');
+        $npmPath = env('NPM_BINARY');
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $chromePath = $chromePath ?: self::CHROME_PATH;
+            $nodePath = $nodePath ?: self::NODE_PATH;
+            $npmPath = $npmPath ?: self::NPM_PATH;
+        }
+
+        if ($chromePath) $browsershot->setChromePath($chromePath);
+        if ($nodePath) $browsershot->setNodeBinary($nodePath);
+        if ($npmPath) $browsershot->setNpmBinary($npmPath);
+
+        return $browsershot
             ->noSandbox()
             ->dismissDialogs()
             ->setOption('args', [
@@ -115,8 +131,13 @@ class HeadlessBrowserService
 
     private function writeInterceptScript(): string
     {
-        $chromePath = addslashes(self::CHROME_PATH);
-        $modulePath = addslashes(self::PROJECT_ROOT . '\\node_modules');
+        // Chrome path: prefer env; empty string lets Puppeteer use its bundled Chromium.
+        $chromePath = addslashes((string) env('CHROME_PATH', PHP_OS_FAMILY === 'Windows' ? self::CHROME_PATH : ''));
+        // node_modules location that holds the puppeteer package.
+        $defaultModules = PHP_OS_FAMILY === 'Windows'
+            ? self::PROJECT_ROOT . '\\node_modules'
+            : base_path('node_modules');
+        $modulePath = addslashes((string) env('NODE_MODULES_PATH', $defaultModules));
         $mediaExts = json_encode(self::MEDIA_EXTENSIONS);
         $mediaMimes = json_encode(self::MEDIA_MIME_PREFIXES);
 
@@ -155,11 +176,13 @@ function isMediaUrl(url, ct) {
     const mediaUrls = [], seen = new Set();
     let browser, html = '';
     try {
-        browser = await puppeteer.launch({
-            executablePath: '__CHROME_PATH__',
+        const launchOpts = {
             headless: 'new',
             args: ['--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-web-security','--no-first-run']
-        });
+        };
+        const chromePath = '__CHROME_PATH__';
+        if (chromePath) { launchOpts.executablePath = chromePath; }
+        browser = await puppeteer.launch(launchOpts);
         const page = await browser.newPage();
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
