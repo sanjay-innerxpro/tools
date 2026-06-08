@@ -43,8 +43,13 @@ class SplitPdfController extends Controller
             $scriptPath = $tempDir . '/' . uniqid('s_') . '.py';
             file_put_contents($scriptPath, $script);
 
-            $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', self::PYTHON, $scriptPath);
-            exec($cmd, $out, $rc);
+            $python = env('PYTHON_EXECUTABLE', 'python');
+            if (PHP_OS_FAMILY === 'Windows') {
+                $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            } else {
+                $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
+            }
+            \exec($cmd, $out, $rc);
             @unlink($scriptPath);
 
             if (!file_exists($outputJson)) {
@@ -66,7 +71,7 @@ class SplitPdfController extends Controller
 
     private function buildScript(string $input, string $tempDir, string $outputJson, string $mode, int $from, int $to): string
     {
-        $pkgs = addslashes(self::PKGS);
+        $pkgs = addslashes(env('PYTHON_PACKAGES_PATH', ''));
         $in   = addslashes($input);
         $dir  = addslashes($tempDir);
         $out  = addslashes($outputJson);

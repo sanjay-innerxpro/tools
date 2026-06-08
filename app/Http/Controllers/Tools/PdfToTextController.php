@@ -35,8 +35,13 @@ class PdfToTextController extends Controller
             $scriptPath = $tempDir . '/' . uniqid('script_') . '.py';
             file_put_contents($scriptPath, $script);
 
-            $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', self::PYTHON_PATH, $scriptPath);
-            exec($cmd, $output, $returnCode);
+            $python = env('PYTHON_EXECUTABLE', 'python');
+            if (PHP_OS_FAMILY === 'Windows') {
+                $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            } else {
+                $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
+            }
+            \exec($cmd, $output, $returnCode);
 
             @unlink($scriptPath);
 
@@ -70,7 +75,7 @@ class PdfToTextController extends Controller
 
     private function buildScript(string $inputPath, string $outputPath): string
     {
-        $packagesPath = addslashes(self::PACKAGES_PATH);
+        $packagesPath = addslashes(env('PYTHON_PACKAGES_PATH', ''));
         $input = addslashes($inputPath);
         $output = addslashes($outputPath);
 

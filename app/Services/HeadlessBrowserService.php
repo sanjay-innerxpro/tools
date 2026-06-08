@@ -233,7 +233,7 @@ JSEOF;
         );
 
         $returnCode = 0;
-        exec($cmd, $outputLines, $returnCode);
+        \exec($cmd, $outputLines, $returnCode);
     }
 }
 

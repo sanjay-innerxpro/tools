@@ -41,8 +41,13 @@ class MergePdfController extends Controller
             $scriptPath = $tempDir . '/' . uniqid('script_') . '.py';
             file_put_contents($scriptPath, $script);
 
-            $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', self::PYTHON_PATH, $scriptPath);
-            exec($cmd, $output, $returnCode);
+            $python = env('PYTHON_EXECUTABLE', 'python');
+            if (PHP_OS_FAMILY === 'Windows') {
+                $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            } else {
+                $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
+            }
+            \exec($cmd, $output, $returnCode);
             @unlink($scriptPath);
 
             if (!file_exists($outputPath)) {
@@ -64,7 +69,7 @@ class MergePdfController extends Controller
 
     private function buildScript(array $inputPaths, string $outputPath): string
     {
-        $packagesPath = addslashes(self::PACKAGES_PATH);
+        $packagesPath = addslashes(env('PYTHON_PACKAGES_PATH', ''));
         $output = addslashes($outputPath);
 
         $pathsList = implode("',\n    r'", array_map('addslashes', $inputPaths));

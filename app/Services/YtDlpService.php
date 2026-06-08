@@ -43,10 +43,14 @@ class YtDlpService
 
         try {
             $python = env('PYTHON_EXECUTABLE', self::PYTHON_EXECUTABLE);
-            $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            if (PHP_OS_FAMILY === 'Windows') {
+                $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            } else {
+                $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
+            }
 
             $returnCode = 0;
-            exec($cmd, $outputLines, $returnCode);
+            \exec($cmd, $outputLines, $returnCode);
 
             if (!file_exists($outputFile)) {
                 throw new \RuntimeException('yt-dlp script produced no output (rc=' . $returnCode . ')');
@@ -243,10 +247,13 @@ PYTHON;
 
         file_put_contents($scriptPath, $script);
 
-        $python = self::PYTHON_PATH;
-        // Start in background on Windows — returns immediately
-        $cmd = sprintf('start /B cmd /c ""%s" "%s" > nul 2>&1"', $python, $scriptPath);
-        pclose(popen($cmd, 'r'));
+        $python = env('PYTHON_EXECUTABLE', self::PYTHON_EXECUTABLE);
+        if (PHP_OS_FAMILY === 'Windows') {
+            $cmd = sprintf('start /B cmd /c ""%s" "%s" > nul 2>&1"', $python, $scriptPath);
+        } else {
+            $cmd = sprintf('nohup "%s" "%s" > /dev/null 2>&1 &', $python, $scriptPath);
+        }
+        \pclose(\popen($cmd, 'r'));
     }
 
     /**
@@ -313,7 +320,7 @@ PYTHON;
 
     private function buildDownloadScript(string $url, string $outputPath): string
     {
-        $packagesPath = self::PACKAGES_PATH;
+        $packagesPath = env('PYTHON_PACKAGES_PATH', '');
         $ffmpegPath = 'C:\\xampp\\htdocs\\project1\\node_modules\\@ffmpeg-installer\\win32-x64\\ffmpeg.exe';
         $escapedUrl = addslashes($url);
         $escapedOutput = addslashes($outputPath);

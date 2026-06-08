@@ -54,8 +54,13 @@ class ImageResizerController extends Controller
             $scriptPath = $tempDir . '/' . uniqid('s_') . '.py';
             file_put_contents($scriptPath, $script);
 
-            $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', self::PYTHON, $scriptPath);
-            exec($cmd, $out, $rc);
+            $python = env('PYTHON_EXECUTABLE', 'python');
+            if (PHP_OS_FAMILY === 'Windows') {
+                $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
+            } else {
+                $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
+            }
+            \exec($cmd, $out, $rc);
             @unlink($scriptPath);
 
             if (!file_exists($outputPath)) {
@@ -77,7 +82,7 @@ class ImageResizerController extends Controller
 
     private function buildScript(string $in, string $out, string $ext, string $mode, int $w, int $h, int $pct, string $keep): string
     {
-        $pkgs = addslashes(self::PKGS);
+        $pkgs = addslashes(env('PYTHON_PACKAGES_PATH', ''));
         $in   = addslashes($in);
         $out  = addslashes($out);
 
