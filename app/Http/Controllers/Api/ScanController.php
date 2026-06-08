@@ -37,10 +37,23 @@ class ScanController extends Controller
             ], 422);
         }
 
-        // Check rate limit for concurrent scans
+        // Check rate limit for concurrent scans.
+        // Only count genuinely active scans: a real scan finishes in 5-15s, so any
+        // queued/processing record older than a few minutes is a crashed/stuck job
+        // and must not lock the user out. Mark those as failed before counting.
         $ip = $request->ip();
+        Scan::where('ip_address', $ip)
+            ->whereIn('status', ['queued', 'processing'])
+            ->where('created_at', '<', now()->subMinutes(5))
+            ->update([
+                'status' => 'failed',
+                'error_code' => 'SCAN_TIMEOUT',
+                'error_message' => 'Scan did not complete in time.',
+            ]);
+
         $concurrentCount = Scan::where('ip_address', $ip)
             ->whereIn('status', ['queued', 'processing'])
+            ->where('created_at', '>=', now()->subMinutes(5))
             ->count();
 
         if ($concurrentCount >= 2) {
