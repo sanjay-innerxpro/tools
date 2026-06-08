@@ -51,8 +51,9 @@ class PageCrawlerService
             $contentType = $response->getHeaderLine('Content-Type');
             $body = (string) $response->getBody();
 
-            // Check if it's directly a media file (not HTML)
-            if ($this->isDirectMediaUrl($contentType)) {
+            // Check if it's directly a media file (not HTML). CDNs serve HLS/DASH
+            // manifests with inconsistent content-types, so also match by URL.
+            if ($this->isDirectMediaUrl($contentType) || $this->isManifestUrl($url)) {
                 return [
                     'success' => true,
                     'type' => 'direct_media',
@@ -138,6 +139,8 @@ class PageCrawlerService
             'video/', 'audio/', 'application/pdf', 'application/zip',
             'application/x-rar', 'application/x-7z-compressed',
             'application/octet-stream', 'image/',
+            'application/x-mpegurl', 'application/vnd.apple.mpegurl',
+            'application/dash+xml', 'application/mpegurl',
         ];
 
         foreach ($mediaTypes as $type) {
@@ -147,6 +150,14 @@ class PageCrawlerService
         }
 
         return false;
+    }
+
+    /** True when the URL path points at an HLS (.m3u8) or DASH (.mpd) manifest. */
+    private function isManifestUrl(string $url): bool
+    {
+        $path = strtolower((string) parse_url($url, PHP_URL_PATH));
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        return in_array($ext, ['m3u8', 'mpd'], true);
     }
 
     private function needsJavaScriptRendering(string $html): bool
