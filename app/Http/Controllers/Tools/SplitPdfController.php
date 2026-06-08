@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
+use App\Support\ProcessRunner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -49,7 +50,7 @@ class SplitPdfController extends Controller
             } else {
                 $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
             }
-            \exec($cmd, $out, $rc);
+            ProcessRunner::run($cmd, 300);
             @unlink($scriptPath);
 
             if (!file_exists($outputJson)) {

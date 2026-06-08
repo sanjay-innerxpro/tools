@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
+use App\Support\ProcessRunner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -63,7 +64,7 @@ class VideoConverterController extends Controller
             } else {
                 $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
             }
-            \exec($cmd, $output, $returnCode);
+            ProcessRunner::run($cmd, 600);
             @unlink($scriptPath);
 
             if (!file_exists($outputPath) || filesize($outputPath) === 0) {

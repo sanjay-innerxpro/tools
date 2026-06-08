@@ -47,4 +47,19 @@ echo "\n\n=== PHP image fallback (no Python needed) ===\n";
 echo "GD extension : " . (extension_loaded('gd') ? "loaded" : "missing") . "\n";
 echo "Imagick ext  : " . (extension_loaded('imagick') ? "loaded" : "missing") . "\n";
 
+echo "\n=== VERDICT: can this host spawn processes? ===\n";
+$runner = null;
+foreach (['proc_open', 'popen', 'exec', 'shell_exec'] as $f) {
+    $disabled = array_map('trim', explode(',', strtolower((string) ini_get('disabled_functions'))));
+    if (function_exists($f) && !in_array(strtolower($f), $disabled, true)) {
+        $runner = $f;
+        break;
+    }
+}
+if ($runner) {
+    echo "YES — scanner/downloader can run via: $runner\n";
+} else {
+    echo "NO — all spawn functions are blocked. Media scan/download cannot work on this plan.\n";
+}
+
 echo "\nDONE. Delete this file when finished.\n";

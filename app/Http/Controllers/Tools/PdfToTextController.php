@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
+use App\Support\ProcessRunner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class PdfToTextController extends Controller
             } else {
                 $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
             }
-            \exec($cmd, $output, $returnCode);
+            ProcessRunner::run($cmd, 300);
 
             @unlink($scriptPath);
 

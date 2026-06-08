@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\ProcessRunner;
 use Illuminate\Support\Facades\Log;
 use Spatie\Browsershot\Browsershot;
 
@@ -220,20 +221,32 @@ JSEOF;
 
     private function runNodeScript(string $scriptPath, string $url, string $outputFile): void
     {
-        $nodePath = addslashes(self::NODE_PATH);
-        $projectRoot = self::PROJECT_ROOT;
+        $node = env('NODE_BINARY', self::NODE_PATH);
+        $projectRoot = env('NODE_PROJECT_ROOT', self::PROJECT_ROOT);
 
-        $cmd = sprintf(
-            'cmd /c "cd /d "%s" && "%s" "%s" "%s" "%s" 2>nul"',
-            $projectRoot,
-            $nodePath,
-            $scriptPath,
-            addslashes($url),
-            $outputFile
-        );
+        if (PHP_OS_FAMILY === 'Windows') {
+            $cmd = sprintf(
+                'cmd /c "cd /d "%s" && "%s" "%s" "%s" "%s" 2>nul"',
+                $projectRoot,
+                $node,
+                $scriptPath,
+                $url,
+                $outputFile
+            );
+        } else {
+            $cmd = sprintf(
+                'cd %s && "%s" "%s" "%s" "%s" 2>/dev/null',
+                escapeshellarg($projectRoot),
+                $node,
+                $scriptPath,
+                $url,
+                $outputFile
+            );
+        }
 
-        $returnCode = 0;
-        \exec($cmd, $outputLines, $returnCode);
+        // Routes through whatever spawn function the host allows; throws a catchable
+        // RuntimeException if all are disabled, so the scan falls back to yt-dlp.
+        ProcessRunner::run($cmd, 60);
     }
 }
 

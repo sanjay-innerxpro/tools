@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Support\ProcessRunner;
 use Illuminate\Support\Facades\Log;
 
 class YtDlpService
@@ -49,8 +50,7 @@ class YtDlpService
                 $cmd = sprintf('"%s" "%s" 2>/dev/null', $python, $scriptPath);
             }
 
-            $returnCode = 0;
-            \exec($cmd, $outputLines, $returnCode);
+            [$outputLines, $returnCode] = ProcessRunner::run($cmd, 120);
 
             if (!file_exists($outputFile)) {
                 throw new \RuntimeException('yt-dlp script produced no output (rc=' . $returnCode . ')');
@@ -253,7 +253,7 @@ PYTHON;
         } else {
             $cmd = sprintf('nohup "%s" "%s" > /dev/null 2>&1 &', $python, $scriptPath);
         }
-        \pclose(\popen($cmd, 'r'));
+        ProcessRunner::runBackground($cmd);
     }
 
     /**
