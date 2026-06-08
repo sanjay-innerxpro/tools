@@ -32,4 +32,10 @@ return [
     'chrome_path' => env('CHROME_PATH', ''),
     'npm_binary' => env('NPM_BINARY', ''),
 
+    // Persistent Chrome profile dir. When set, the headless browser reuses the
+    // cookies/login stored here — so after a one-time `php artisan browser:login`
+    // it can render login-gated pages (e.g. tl;dv) as the signed-in user.
+    // Local use only; the live server has no interactive login.
+    'chrome_user_data_dir' => env('CHROME_USER_DATA_DIR', ''),
+
 ];

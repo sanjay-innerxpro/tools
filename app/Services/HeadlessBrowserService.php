@@ -76,6 +76,9 @@ class HeadlessBrowserService
         if ($nodePath) $browsershot->setNodeBinary($nodePath);
         if ($npmPath) $browsershot->setNpmBinary($npmPath);
 
+        $userDataDir = config('tools.chrome_user_data_dir');
+        if ($userDataDir) $browsershot->setUserDataDir($userDataDir);
+
         return $browsershot
             ->noSandbox()
             ->dismissDialogs()
@@ -139,6 +142,7 @@ class HeadlessBrowserService
             ? self::PROJECT_ROOT . '\\node_modules'
             : base_path('node_modules');
         $modulePath = addslashes((string) (config('tools.node_modules_path') ?: $defaultModules));
+        $userDataDir = addslashes((string) config('tools.chrome_user_data_dir', ''));
         $mediaExts = json_encode(self::MEDIA_EXTENSIONS);
         $mediaMimes = json_encode(self::MEDIA_MIME_PREFIXES);
 
@@ -183,6 +187,8 @@ function isMediaUrl(url, ct) {
         };
         const chromePath = '__CHROME_PATH__';
         if (chromePath) { launchOpts.executablePath = chromePath; }
+        const userDataDir = '__USER_DATA_DIR__';
+        if (userDataDir) { launchOpts.userDataDir = userDataDir; }
         browser = await puppeteer.launch(launchOpts);
         const page = await browser.newPage();
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
@@ -230,6 +236,7 @@ JSEOF;
         // Substitute constants into the script
         $script = str_replace('__MODULE_PATH__', $modulePath, $script);
         $script = str_replace('__CHROME_PATH__', $chromePath, $script);
+        $script = str_replace('__USER_DATA_DIR__', $userDataDir, $script);
         $script = str_replace('__MEDIA_EXTS__', $mediaExts, $script);
         $script = str_replace('__MEDIA_MIMES__', $mediaMimes, $script);
 
