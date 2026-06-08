@@ -43,7 +43,7 @@ class YtDlpService
         file_put_contents($scriptPath, $script);
 
         try {
-            $python = env('PYTHON_EXECUTABLE', self::PYTHON_EXECUTABLE);
+            $python = config('tools.python', self::PYTHON_EXECUTABLE);
             if (PHP_OS_FAMILY === 'Windows') {
                 $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
             } else {
@@ -90,7 +90,7 @@ class YtDlpService
     {
         $escapedUrl = addslashes($url);
         $escapedOutput = addslashes($outputFile);
-        $packagesPath = addslashes((string) env('PYTHON_PACKAGES_PATH', ''));
+        $packagesPath = addslashes((string) config('tools.python_packages_path', ''));
 
         return <<<PYTHON
 import sys, json, os
@@ -253,7 +253,7 @@ PYTHON;
 
         file_put_contents($scriptPath, $script);
 
-        $python = env('PYTHON_EXECUTABLE', self::PYTHON_EXECUTABLE);
+        $python = config('tools.python', self::PYTHON_EXECUTABLE);
         if (PHP_OS_FAMILY === 'Windows') {
             $cmd = sprintf('start /B cmd /c ""%s" "%s" > nul 2>&1"', $python, $scriptPath);
         } else {
@@ -326,11 +326,11 @@ PYTHON;
 
     private function buildDownloadScript(string $url, string $outputPath): string
     {
-        $packagesPath = env('PYTHON_PACKAGES_PATH', '');
-        $ffmpegPath = 'C:\\xampp\\htdocs\\project1\\node_modules\\@ffmpeg-installer\\win32-x64\\ffmpeg.exe';
+        $packagesPath = config('tools.python_packages_path', '');
+        $ffmpegPath = config('tools.ffmpeg', '');
         $escapedUrl = addslashes($url);
         $escapedOutput = addslashes($outputPath);
-        $escapedFfmpeg = addslashes($ffmpegPath);
+        $escapedFfmpeg = addslashes((string) $ffmpegPath);
         $progressPath = addslashes($outputPath . '/../' . basename(str_replace('.mp4', '.progress', $outputPath)));
         // Normalize to the same directory
         $progressFile = str_replace('.mp4', '.progress', $outputPath);
@@ -338,10 +338,20 @@ PYTHON;
 
         return <<<PYTHON
 import sys, re, os, subprocess, urllib.request, shutil, json
-sys.path.insert(0, r'{$packagesPath}')
+_pkgs = r'{$packagesPath}'
+if _pkgs:
+    sys.path.insert(0, _pkgs)
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Resolve ffmpeg: configured path -> imageio-ffmpeg bundled binary -> ffmpeg on PATH
 FFMPEG_PATH = r'{$escapedFfmpeg}'
+if not FFMPEG_PATH or not os.path.exists(FFMPEG_PATH):
+    try:
+        import imageio_ffmpeg
+        FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        FFMPEG_PATH = 'ffmpeg'
+
 URL = '{$escapedUrl}'
 OUTPUT_PATH = r'{$escapedOutput}'
 PROGRESS_FILE = r'{$escapedProgress}'

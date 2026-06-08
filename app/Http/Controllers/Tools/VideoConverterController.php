@@ -58,7 +58,7 @@ class VideoConverterController extends Controller
             $scriptPath = $tempDir . '/' . uniqid('script_') . '.py';
             file_put_contents($scriptPath, $script);
 
-            $python = env('PYTHON_EXECUTABLE', 'python');
+            $python = config('tools.python');
             if (PHP_OS_FAMILY === 'Windows') {
                 $cmd = sprintf('cmd /c ""%s" "%s" 2>nul"', $python, $scriptPath);
             } else {
@@ -86,7 +86,7 @@ class VideoConverterController extends Controller
 
     private function buildScript(string $input, string $output, string $format): string
     {
-        $packagesPath = addslashes(env('PYTHON_PACKAGES_PATH', ''));
+        $packagesPath = addslashes(config('tools.python_packages_path'));
         $input = addslashes($input);
         $output = addslashes($output);
 

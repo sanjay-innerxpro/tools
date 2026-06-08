@@ -62,9 +62,9 @@ class HeadlessBrowserService
         // Only pin binary paths when explicitly configured. On Linux/shared hosting
         // we let Browsershot find `node` on PATH and use Puppeteer's bundled Chromium,
         // instead of the Windows dev-machine defaults which don't exist on the server.
-        $chromePath = env('CHROME_PATH');
-        $nodePath = env('NODE_BINARY');
-        $npmPath = env('NPM_BINARY');
+        $chromePath = config('tools.chrome_path') ?: null;
+        $nodePath = config('tools.node_binary') ?: null;
+        $npmPath = config('tools.npm_binary') ?: null;
 
         if (PHP_OS_FAMILY === 'Windows') {
             $chromePath = $chromePath ?: self::CHROME_PATH;
@@ -131,13 +131,14 @@ class HeadlessBrowserService
 
     private function writeInterceptScript(): string
     {
-        // Chrome path: prefer env; empty string lets Puppeteer use its bundled Chromium.
-        $chromePath = addslashes((string) env('CHROME_PATH', PHP_OS_FAMILY === 'Windows' ? self::CHROME_PATH : ''));
+        // Chrome path: prefer config; empty string lets Puppeteer use its bundled Chromium.
+        $chromePath = addslashes((string) (config('tools.chrome_path')
+            ?: (PHP_OS_FAMILY === 'Windows' ? self::CHROME_PATH : '')));
         // node_modules location that holds the puppeteer package.
         $defaultModules = PHP_OS_FAMILY === 'Windows'
             ? self::PROJECT_ROOT . '\\node_modules'
             : base_path('node_modules');
-        $modulePath = addslashes((string) env('NODE_MODULES_PATH', $defaultModules));
+        $modulePath = addslashes((string) (config('tools.node_modules_path') ?: $defaultModules));
         $mediaExts = json_encode(self::MEDIA_EXTENSIONS);
         $mediaMimes = json_encode(self::MEDIA_MIME_PREFIXES);
 
@@ -244,8 +245,8 @@ JSEOF;
 
     private function runNodeScript(string $scriptPath, string $url, string $outputFile): void
     {
-        $node = env('NODE_BINARY', self::NODE_PATH);
-        $projectRoot = env('NODE_PROJECT_ROOT', self::PROJECT_ROOT);
+        $node = config('tools.node_binary') ?: (PHP_OS_FAMILY === 'Windows' ? self::NODE_PATH : 'node');
+        $projectRoot = config('tools.node_project_root') ?: (PHP_OS_FAMILY === 'Windows' ? self::PROJECT_ROOT : base_path());
 
         if (PHP_OS_FAMILY === 'Windows') {
             $cmd = sprintf(
