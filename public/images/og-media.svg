@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">ToolBox - Media Scanner</title>
+  <desc id="desc">Scan public URLs and discover downloadable media assets fast.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1040" cy="120" r="180" fill="#ffffff" opacity="0.08"/>
+  <circle cx="170" cy="540" r="180" fill="#ffffff" opacity="0.08"/>
+
+  <text x="90" y="140" fill="#93c5fd" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">TOOLBOX</text>
+  <text x="90" y="230" fill="#ffffff" font-size="74" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Media Scanner</text>
+  <text x="90" y="292" fill="#cbd5e1" font-size="34" font-family="Segoe UI, Arial, sans-serif">Find videos, audio, and downloadable assets from URLs</text>
+
+  <rect x="90" y="338" width="660" height="172" rx="22" fill="#020617" opacity="0.62"/>
+  <rect x="125" y="380" width="590" height="30" rx="15" fill="#1e293b"/>
+  <circle cx="148" cy="395" r="8" fill="#22c55e"/>
+  <text x="170" y="402" fill="#e2e8f0" font-size="22" font-family="Segoe UI, Arial, sans-serif">https://example.com/watch?v=abc</text>
+  <rect x="125" y="432" width="190" height="46" rx="10" fill="#2563eb"/>
+  <text x="164" y="462" fill="#ffffff" font-size="24" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Scan URL</text>
+
+  <circle cx="910" cy="360" r="120" fill="#0b1220" opacity="0.72"/>
+  <circle cx="910" cy="360" r="94" fill="none" stroke="#38bdf8" stroke-width="7"/>
+  <line x1="972" y1="422" x2="1050" y2="500" stroke="#38bdf8" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="910" cy="360" r="42" fill="#22d3ee" opacity="0.82"/>
+</svg>
