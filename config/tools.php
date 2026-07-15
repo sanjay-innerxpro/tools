@@ -19,6 +19,7 @@ return [
     'python' => env('PYTHON_EXECUTABLE', PHP_OS_FAMILY === 'Windows' ? 'python' : 'python3'),
 
     // Folder where `pip install --target=...` placed yt-dlp/Pillow/etc.
+    // Keep this outside the git repo in production; set PYTHON_PACKAGES_PATH.
     'python_packages_path' => env('PYTHON_PACKAGES_PATH', ''),
 
     // ffmpeg binary. Leave empty to auto-resolve via the imageio-ffmpeg

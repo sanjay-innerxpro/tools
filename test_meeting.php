@@ -5,11 +5,17 @@ require __DIR__ . '/vendor/autoload.php';
 $app = require_once __DIR__ . '/bootstrap/app.php';
 $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
-$url = 'https://tldv.io/app/meetings/69cdf8ac507ec900137bd498';
-echo "Testing: {$url}\n\n";
+$urls = array_slice($argv, 1);
+if (empty($urls)) {
+    $urls = ['https://tldv.io/app/meetings/69cdf8ac507ec900137bd498'];
+}
 
-// === Phase 1: Static fetch ===
-echo "=== PHASE 1: Static HTTP ===\n";
+foreach ($urls as $index => $url) {
+    echo "=== MEETING " . ($index + 1) . ' OF ' . count($urls) . " ===\n";
+    echo "Testing: {$url}\n\n";
+
+    // === Phase 1: Static fetch ===
+    echo "=== PHASE 1: Static HTTP ===\n";
 $crawler = app(\App\Services\PageCrawlerService::class);
 $r1 = $crawler->fetch($url);
 echo "Success: " . ($r1['success'] ? 'yes' : 'no') . "\n";
@@ -87,3 +93,8 @@ echo "Success: " . ($r3['success'] ? 'yes' : 'no') . "\n";
 echo "Title: " . ($r3['title'] ?? 'N/A') . "\n";
 echo "Assets: " . count($r3['assets'] ?? []) . "\n";
 if (!empty($r3['error'])) echo "Error: " . $r3['error'] . "\n";
+
+    if ($index < count($urls) - 1) {
+        echo "\n";
+    }
+}

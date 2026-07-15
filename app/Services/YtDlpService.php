@@ -337,7 +337,7 @@ PYTHON;
         $escapedProgress = addslashes($progressFile);
 
         return <<<PYTHON
-import sys, re, os, subprocess, urllib.request, shutil, json
+import sys, re, os, subprocess, urllib.request, shutil, json, time
 _pkgs = r'{$packagesPath}'
 if _pkgs:
     sys.path.insert(0, _pkgs)
@@ -356,7 +356,9 @@ URL = '{$escapedUrl}'
 OUTPUT_PATH = r'{$escapedOutput}'
 PROGRESS_FILE = r'{$escapedProgress}'
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-MAX_WORKERS = 32
+MAX_WORKERS = 8
+SEGMENT_TIMEOUT = 60
+SEGMENT_RETRIES = 5
 
 
 def write_progress(status, **kwargs):
@@ -381,25 +383,26 @@ def rot_decode(text, shift):
 
 def fetch(url):
     req = urllib.request.Request(url, headers={'User-Agent': UA})
-    with urllib.request.urlopen(req, timeout=30) as r:
+    with urllib.request.urlopen(req, timeout=SEGMENT_TIMEOUT) as r:
         return r.read()
 
 
 def download_segment(args):
     idx, url, seg_dir = args
     seg_path = os.path.join(seg_dir, f'{idx:06d}.ts')
-    for attempt in range(3):
+    last_error = ''
+    for attempt in range(SEGMENT_RETRIES):
         try:
             req = urllib.request.Request(url, headers={'User-Agent': UA})
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=SEGMENT_TIMEOUT) as r:
                 data = r.read()
             with open(seg_path, 'wb') as f:
                 f.write(data)
             return idx, True
-        except Exception:
-            if attempt == 2:
-                return idx, False
-    return idx, False
+        except Exception as e:
+            last_error = f'{type(e).__name__}: {e}'
+            time.sleep(min(2 ** attempt, 10))
+    return idx, False, last_error
 
 
 def concat_to_mp4(seg_dir, total):
@@ -422,7 +425,46 @@ def concat_to_mp4(seg_dir, total):
     result = subprocess.run(cmd, capture_output=True, timeout=300)
     if os.path.exists(concat_file):
         os.remove(concat_file)
-    return result.returncode == 0 and os.path.exists(OUTPUT_PATH)
+    if result.returncode == 0 and os.path.exists(OUTPUT_PATH):
+        return True
+    return pyav_to_mp4(seg_dir, total)
+
+
+def pyav_to_mp4(seg_dir, total):
+    try:
+        import av
+    except Exception as e:
+        write_progress('error', message=f'ffmpeg failed and PyAV is not installed: {e}')
+        return False
+
+    joined_path = OUTPUT_PATH + '.joined.ts'
+    try:
+        with open(joined_path, 'wb') as joined:
+            for i in range(total):
+                seg_path = os.path.join(seg_dir, f'{i:06d}.ts')
+                with open(seg_path, 'rb') as segment:
+                    shutil.copyfileobj(segment, joined)
+
+        input_container = av.open(joined_path)
+        output_container = av.open(OUTPUT_PATH, 'w')
+        stream_map = {
+            stream: output_container.add_stream_from_template(stream)
+            for stream in input_container.streams
+        }
+        for packet in input_container.demux():
+            if packet.stream not in stream_map or packet.dts is None:
+                continue
+            packet.stream = stream_map[packet.stream]
+            output_container.mux(packet)
+        output_container.close()
+        input_container.close()
+        return os.path.exists(OUTPUT_PATH) and os.path.getsize(OUTPUT_PATH) > 1024
+    except Exception as e:
+        write_progress('error', message=f'PyAV conversion failed: {e}')
+        return False
+    finally:
+        if os.path.exists(joined_path):
+            os.remove(joined_path)
 
 
 def parallel_download(segment_urls):
@@ -433,21 +475,44 @@ def parallel_download(segment_urls):
     try:
         tasks = [(i, u, seg_dir) for i, u in enumerate(segment_urls)]
         done_count = 0
-        failed = 0
+        failed = []
+        errors = []
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
             futures = {pool.submit(download_segment, t): t[0] for t in tasks}
             for future in as_completed(futures):
-                _, ok = future.result()
+                result = future.result()
+                idx, ok = result[0], result[1]
                 if ok:
                     done_count += 1
                 else:
-                    failed += 1
-                if (done_count + failed) % 50 == 0 or done_count + failed == total:
+                    failed.append(idx)
+                    if len(result) > 2 and len(errors) < 5:
+                        errors.append(f'{idx}: {result[2]}')
+                completed = done_count + len(failed)
+                if completed % 50 == 0 or completed == total:
                     write_progress('downloading', done=done_count, total=total,
                                    message=f'Downloading {done_count}/{total} segments...')
-                if failed > total * 0.1:
-                    write_progress('error', message='Too many segment downloads failed.')
-                    return False
+
+        if failed:
+            write_progress('downloading', done=done_count, total=total,
+                           message=f'Retrying {len(failed)} failed segments...')
+            retry_failed = []
+            for idx in failed:
+                result = download_segment((idx, segment_urls[idx], seg_dir))
+                if result[1]:
+                    done_count += 1
+                else:
+                    retry_failed.append(idx)
+                    if len(result) > 2 and len(errors) < 5:
+                        errors.append(f'{idx}: {result[2]}')
+                if done_count % 50 == 0 or done_count == total:
+                    write_progress('downloading', done=done_count, total=total,
+                                   message=f'Downloading {done_count}/{total} segments...')
+
+            if retry_failed:
+                detail = '; '.join(errors[:5])
+                write_progress('error', message=f'{len(retry_failed)} segment downloads failed after retries.', detail=detail)
+                return False
         return concat_to_mp4(seg_dir, total)
     finally:
         if os.path.exists(seg_dir):

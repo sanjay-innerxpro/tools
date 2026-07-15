@@ -7,6 +7,18 @@
 @section('content')
 <div x-data="mediaScanner()" x-cloak class="max-w-4xl mx-auto px-4 py-10">
 
+    <div class="mb-6 flex items-center justify-between gap-3">
+        <button type="button" onclick="window.history.back()" class="inline-flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 transition-colors">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            {{ __('Back') }}
+        </button>
+        <a href="/" class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            {{ __('Go to home') }}
+        </a>
+    </div>
+
     {{-- Page Header --}}
     <div class="text-center mb-8">
         <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl shadow-lg shadow-blue-500/20 mb-5">

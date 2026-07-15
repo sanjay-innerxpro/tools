@@ -11,7 +11,13 @@ echo "[2/6] Installing Node dependencies..."
 npm ci
 
 echo "[3/6] Installing Python dependencies..."
-python3 -m pip install --user -r requirements.txt
+if [ -z "${PYTHON_PACKAGES_PATH:-}" ]; then
+  echo "PYTHON_PACKAGES_PATH must point to a folder outside this git repo."
+  echo "Example: export PYTHON_PACKAGES_PATH=/home/USER/tools-python-packages"
+  exit 1
+fi
+mkdir -p "$PYTHON_PACKAGES_PATH"
+python3 -m pip install --upgrade --target="$PYTHON_PACKAGES_PATH" -r requirements.txt
 
 echo "[4/6] Building Vite assets for production..."
 npm run build

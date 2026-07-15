@@ -3,3 +3,4 @@ Pillow
 PyPDF2
 pdfplumber
 imageio-ffmpeg
+av
