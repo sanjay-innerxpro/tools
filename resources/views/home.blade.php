@@ -348,6 +348,25 @@
                     </div>
                 </a>
 
+                {{-- OTP Generator --}}
+                <a href="/tools/otp-generator"
+                   class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-sky-300 dark:hover:border-sky-700 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/30 transition-shadow">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h10M7 11h6m-6 4h10m2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">{{ __('OTP Generator') }}</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Generate one-time passwords instantly and copy them to your clipboard.') }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <svg class="w-5 h-5 text-gray-300 dark:text-gray-700 group-hover:text-sky-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
                 {{-- JSON Formatter --}}
                 <a href="/tools/json-formatter"
                    class="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200">

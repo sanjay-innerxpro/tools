@@ -152,12 +152,13 @@
 
                     {{-- Utilities Dropdown --}}
                     <div class="relative" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/password-generator') || request()->is('tools/json-formatter') || request()->is('tools/base64-encoder') || request()->is('tools/unit-converter') || request()->is('tools/color-converter') || request()->is('tools/qr-code-generator') || request()->is('tools/word-counter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+                        <button class="px-3 py-2 text-sm font-medium rounded-lg transition-colors inline-flex items-center gap-1 {{ request()->is('tools/password-generator') || request()->is('tools/otp-generator') || request()->is('tools/json-formatter') || request()->is('tools/base64-encoder') || request()->is('tools/unit-converter') || request()->is('tools/color-converter') || request()->is('tools/qr-code-generator') || request()->is('tools/word-counter') ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800' }}">
                             {{ __('Utilities') }}
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                         </button>
                         <div x-show="open" x-transition class="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl py-1 z-50">
                             <a href="/tools/password-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Password Generator') }}</a>
+                            <a href="/tools/otp-generator" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('OTP Generator') }}</a>
                             <a href="/tools/json-formatter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('JSON Formatter') }}</a>
                             <a href="/tools/base64-encoder" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Base64 Encoder / Decoder') }}</a>
                             <a href="/tools/unit-converter" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ __('Unit Converter') }}</a>

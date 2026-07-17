@@ -89,6 +89,7 @@ Route::get('/seo/preview', function () {
         'tools/qr-code-generator' => __('Create QR codes online for URLs, text, and contact details with quick download options.'),
         'tools/word-counter' => __('Count words, characters, sentences, and reading time instantly with this free online word and character counter.'),
         'tools/password-generator' => __('Generate strong random passwords with custom length and character options for better account security.'),
+        'tools/otp-generator' => __('Generate secure one-time passwords instantly and copy them with one click.'),
         'tools/json-formatter' => __('Format, validate, and beautify JSON data online to improve readability and catch syntax issues.'),
         'tools/base64-encoder' => __('Encode text to Base64 or decode Base64 strings instantly for APIs, tokens, and debugging.'),
         'tools/unit-converter' => __('Convert length, weight, temperature, and other units accurately with this fast free unit converter.'),
@@ -166,6 +167,7 @@ Route::get('/tools/audio-converter', [AudioConverterController::class, 'index'])
 Route::get('/tools/qr-code-generator', fn() => view('tools.qr-code-generator'));
 Route::get('/tools/word-counter', fn() => view('tools.word-counter'));
 Route::get('/tools/password-generator', fn() => view('tools.password-generator'));
+Route::get('/tools/otp-generator', fn() => view('tools.otp-generator'));
 Route::get('/tools/json-formatter', fn() => view('tools.json-formatter'));
 Route::get('/tools/base64-encoder', fn() => view('tools.base64-encoder'));
 Route::get('/tools/unit-converter', fn() => view('tools.unit-converter'));
